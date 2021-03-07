@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Input\Keyboard.cpp">
+      <Filter>Devices\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Input\Mouse.cpp">
+      <Filter>Devices\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Xaml\Application.cpp">
+      <Filter>Xaml</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Timer.cpp">
+      <Filter>Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\AppWindow.cpp">
+      <Filter>Desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Control.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Panel.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MainMenu.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Menu.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuItem.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\PopupMenu.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\HamburgerMenu.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuHelper.cpp">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\WebView.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Serial\SerialPort.cpp">
+      <Filter>Devices\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ScrollBox.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Page.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Grid.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Image.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\TextBlock.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ResourceHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Application.cpp">
+      <Filter>Desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ListBox.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Button.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ProgressBar.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Framework\Application.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Input\Keyboard.h">
+      <Filter>Devices\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Input\Mouse.h">
+      <Filter>Devices\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Xaml\Application.h">
+      <Filter>Xaml</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Timer.h">
+      <Filter>Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\AppWindow.h">
+      <Filter>Desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Control.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Panel.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MainMenu.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Menu.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuItem.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\PopupMenu.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\HamburgerMenu.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuHelper.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\WebView.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Symbols.h">
+      <Filter>Desktop\Controls\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Serial\SerialPort.h">
+      <Filter>Devices\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ScrollBox.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Page.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Grid.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CriticalSection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)EventHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HandleBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TaskHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Image.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\TextBlock.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ResourceHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Application.h">
+      <Filter>Desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ListBox.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Button.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ProgressBar.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Framework\Application.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Devices">
+      <UniqueIdentifier>{ba2e34cd-708a-4df0-a3dc-c104a98c6769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Devices\Input">
+      <UniqueIdentifier>{d23f5be6-8115-4b78-a89a-b0e4fa41d7f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{61d22161-d5b4-4650-b9bd-48e65b4ed405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xaml">
+      <UniqueIdentifier>{81f2c21b-ab9c-4f79-8be9-cb86f15cf69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desktop">
+      <UniqueIdentifier>{6a18a19e-a3df-424e-b3dc-861699c1bdb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desktop\Controls">
+      <UniqueIdentifier>{5366f2e6-7867-4792-a48e-6dc80d28d546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desktop\Controls\Menus">
+      <UniqueIdentifier>{8c3376f7-4378-4933-948b-46efb5091173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Devices\Serial">
+      <UniqueIdentifier>{71c272ed-f0ec-4e47-881f-ad6ac3a8dc58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{ce3f81c2-5f2a-4637-bfe9-5f71e37c71a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Configuration.props">
+      <Filter>Configuration</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Default.props">
+      <Filter>Configuration</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Platform.props">
+      <Filter>Configuration</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Compiler.props">
+      <Filter>Configuration</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Globals.props">
+      <Filter>Configuration</Filter>
+    </None>
+  </ItemGroup>
+</Project>

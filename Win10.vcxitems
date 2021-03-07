@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{96DD2E40-4B02-4A71-A62D-C1727DD6491F}</ItemsProjectGuid>
+    <ItemsSccProjectName>$/Shared/Win10</ItemsSccProjectName>
+    <ItemsSccAuxPath>https://svenbieg.visualstudio.com</ItemsSccAuxPath>
+    <ItemsSccLocalPath>.</ItemsSccLocalPath>
+    <ItemsSccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</ItemsSccProvider>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CriticalSection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\AppWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Button.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Control.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Grid.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ListBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\HamburgerMenu.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MainMenu.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Menu.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuItem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\PopupMenu.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Symbols.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Page.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Panel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ProgressBar.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\ScrollBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\TextBlock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\WebView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Input\Keyboard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Input\Mouse.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Serial\SerialPort.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Timer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)EventHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Framework\Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HandleBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ResourceHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TaskHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Xaml\Application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\AppWindow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Button.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Control.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Grid.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ListBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\HamburgerMenu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MainMenu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Menu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\MenuItem.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\PopupMenu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Page.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Panel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\Image.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ProgressBar.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\ScrollBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\TextBlock.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\WebView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Input\Keyboard.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Input\Mouse.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Serial\SerialPort.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Timer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Framework\Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ResourceHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Xaml\Application.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Compiler.props" />
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Configuration.props" />
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Default.props" />
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Globals.props" />
+    <None Include="$(MSBuildThisFileDirectory)Configuration\Platform.props" />
+  </ItemGroup>
+</Project>
