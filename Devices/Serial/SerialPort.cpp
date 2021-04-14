@@ -12,6 +12,7 @@
 #include "SerialPort.h"
 
 using namespace Concurrency;
+using namespace Windows::Devices::SerialCommunication;
 using namespace Windows::Storage::Streams;
 
 
@@ -27,23 +28,150 @@ namespace Devices {
 // Con-/Destructors
 //==================
 
-SerialPort::SerialPort(Platform::String^ hid):
-BaudRate(this, 115200)
+SerialPort::SerialPort(Serial::BaudRate baud):
+BaudRate(this, baud)
 {
-create_task(SerialDevice::FromIdAsync(hid)).then([this](SerialDevice^ hdevice)
-	{
-	hDevice=hdevice;
-	hDevice->BaudRate=BaudRate;
-	hReader=ref new DataReader(hDevice->InputStream);
-	hReader->InputStreamOptions=InputStreamOptions::Partial;
-	hWriter=ref new DataWriter(hDevice->OutputStream);
-	BaudRate.Changed.Add(this, &SerialPort::OnBaudRateChanged);
-	});
+BaudRate.Changed.Add(this, &SerialPort::OnBaudRateChanged);
 }
 
 SerialPort::~SerialPort()
 {
-Close();
+CloseInternal();
+}
+
+
+//========
+// Common
+//========
+
+VOID SerialPort::Abort()
+{
+Cancel();
+ScopedLock lock(cCriticalSection);
+SerialDevice^ device=create_task(SerialDevice::FromIdAsync(hDeviceId)).get();
+if(!device)
+	{
+	Disconnected(this);
+	return;
+	}
+hDevice=device;
+Initialize();
+}
+
+VOID SerialPort::Cancel()
+{
+CloseInternal();
+}
+
+VOID SerialPort::ClearBuffer()
+{
+ScopedLock lock(cCriticalSection);
+if(!hReader)
+	return;
+SIZE_T available=hReader->UnconsumedBufferLength;
+if(!available)
+	return;
+try
+	{
+	for(SIZE_T u=0; u<available; u++)
+		hReader->ReadByte();
+	}
+catch(Platform::Exception^)
+	{
+	if(hDevice)
+		{
+		lock.Release();
+		Disconnected(this);
+		}
+	}
+}
+
+VOID SerialPort::Close()
+{
+ScopedLock lock(cCriticalSection);
+if(!hDevice)
+	return;
+CloseInternal();
+}
+
+VOID SerialPort::Connect(Platform::String^ hid)
+{
+ScopedLock lock(cCriticalSection);
+if(hDevice)
+	return;
+hDeviceId=hid;
+Handle<SerialPort> hserial=this;
+create_task(SerialDevice::FromIdAsync(hDeviceId)).then([this, hserial](SerialDevice^ hdevice)
+	{
+	if(!hdevice)
+		{
+		Disconnected(this);
+		return;
+		}
+	ScopedLock lock(cCriticalSection);
+	hDevice=hdevice;
+	Initialize();
+	lock.Release();
+	Connected(this);
+	});
+}
+
+VOID SerialPort::Listen(UINT size)
+{
+ScopedLock lock(cCriticalSection);
+if(!hReader)
+	return;
+if(hListenTask)
+	return;
+hListenTask=CreateTask(this, &SerialPort::DoListen, size);
+}
+
+UINT SerialPort::Load(UINT size, UINT timeout)
+{
+ScopedLock lock(cCriticalSection);
+if(!hReader)
+	return 0;
+if(hListenTask)
+	return 0;
+if(hReader->UnconsumedBufferLength)
+	return hReader->UnconsumedBufferLength;
+if(timeout)
+	hTimeoutTask=CreateTask(this, &SerialPort::DoTimeout, timeout);
+UINT available=0;
+try
+	{
+	available=create_task(hReader->LoadAsync(size)).get();
+	}
+catch(Platform::Exception^)
+	{
+	if(hDevice)
+		{
+		lock.Release();
+		Disconnected(this);
+		}
+	return 0;
+	}
+if(hTimeoutTask)
+	{
+	hTimeoutTask->Cancel=true;
+	hTimeoutTask->Wait();
+	hTimeoutTask=nullptr;
+	}
+return available;
+}
+
+VOID SerialPort::SetDataTerminalReady(BOOL enabled)
+{
+ScopedLock lock(cCriticalSection);
+if(hDevice)
+	hDevice->IsDataTerminalReadyEnabled=enabled;
+}
+
+VOID SerialPort::SetRequestToSend(BOOL enabled)
+{
+ScopedLock lock(cCriticalSection);
+if(hDevice)
+	hDevice->IsRequestToSendEnabled=enabled;
 }
 
 
@@ -53,25 +181,39 @@ Close();
 
 SIZE_T SerialPort::Available()
 {
+ScopedLock lock(cCriticalSection);
 if(!hReader)
 	return 0;
 return hReader->UnconsumedBufferLength;
 }
 
-SIZE_T SerialPort::Read(VOID* pbuf, SIZE_T usize)
+SIZE_T SerialPort::Read(VOID* pbuf, SIZE_T size)
 {
+ScopedLock lock(cCriticalSection);
 if(!hReader)
 	return 0;
-SIZE_T uavailable=hReader->UnconsumedBufferLength;
-SIZE_T uread=MIN(usize, uavailable);
-if(!pbuf)
+UINT available=hReader->UnconsumedBufferLength;
+UINT read=(UINT)MIN(size, available);
+try
 	{
-	for(SIZE_T u=0; u<uread; u++)
-		hReader->ReadByte();
-	return uread;
+	if(!pbuf)
+		{
+		for(SIZE_T u=0; u<read; u++)
+			hReader->ReadByte();
+		return read;
+		}
+	hReader->ReadBytes(Platform::ArrayReference<BYTE>((BYTE*)pbuf, read));
 	}
-hReader->ReadBytes(Platform::ArrayReference<BYTE>((BYTE*)pbuf, uread));
-return uread;
+catch(Platform::Exception^)
+	{
+	if(hDevice)
+		{
+		lock.Release();
+		Disconnected(this);
+		}
+	return 0;
+	}
+return read;
 }
 
 
@@ -81,7 +223,10 @@ return uread;
 
 VOID SerialPort::Flush()
 {
+ScopedLock lock(cCriticalSection);
 if(!hWriter)
+	return;
+if(!hWriter->UnstoredBufferLength)
 	return;
 try
 	{
@@ -89,67 +234,33 @@ try
 	}
 catch(Platform::Exception^)
 	{
-	Disconnected(this);
+	if(hDevice)
+		{
+		lock.Release();
+		Disconnected(this);
+		}
+	return;
 	}
 }
 
-SIZE_T SerialPort::Write(VOID const* pbuf, SIZE_T usize)
+SIZE_T SerialPort::Write(VOID const* pbuf, SIZE_T size)
 {
+ScopedLock lock(cCriticalSection);
 if(!hWriter)
 	return 0;
-hWriter->WriteBytes(Platform::ArrayReference<BYTE>((BYTE*)pbuf, usize));
-return usize;
-}
-
-
-//========
-// Common
-//========
-
-VOID SerialPort::Close()
-{
-BaudRate.Changed.Remove(this);
-hDevice=nullptr;
-hReader=nullptr;
-hWriter=nullptr;
-}
-
-SIZE_T SerialPort::Receive(SIZE_T usize)
-{
-if(!hReader)
-	return 0;
-TimeSpan timeout;
-timeout.Duration=UINT64_MAX;
-hDevice->ReadTimeout=timeout;
-SIZE_T uavailable=0;
 try
 	{
-	uavailable=create_task(hReader->LoadAsync(usize)).get();
+	hWriter->WriteBytes(Platform::ArrayReference<BYTE>((BYTE*)pbuf, (UINT)size));
 	}
 catch(Platform::Exception^)
 	{
-	Disconnected(this);
+	if(hDevice)
+		{
+		lock.Release();
+		Disconnected(this);
+		}
 	}
-return uavailable;
-}
-
-SIZE_T SerialPort::Receive(SIZE_T usize, UINT ums)
-{
-if(!hReader)
-	return 0;
-TimeSpan timeout;
-timeout.Duration=ums*10000;
-hDevice->ReadTimeout=timeout;
-SIZE_T uavailable=0;
-try
-	{
-	uavailable=create_task(hReader->LoadAsync(usize)).get();
-	}
-catch(Platform::Exception^)
-	{
-	Disconnected(this);
-	}
-return uavailable;
+return size;
 }
 
 
@@ -157,10 +268,75 @@ return uavailable;
 // Common Private
 //================
 
-VOID SerialPort::OnBaudRateChanged(UINT ubaud)
+VOID SerialPort::CloseInternal()
 {
+hDevice=nullptr;
+hReader=nullptr;
+hWriter=nullptr;
+if(hListenTask)
+	{
+	hListenTask->Cancel=true;
+	hListenTask->Wait();
+	hListenTask=nullptr;
+	}
+
+}
+
+VOID SerialPort::DoListen(Handle<Task> task, UINT size)
+{
+while(!task->Cancel)
+	{
+	UINT available=hReader->UnconsumedBufferLength;
+	if(!available)
+		{
+		try
+			{
+			available=create_task(hReader->LoadAsync(size)).get();
+			}
+		catch(Platform::Exception^)
+			{
+			if(hDevice)
+				Disconnected(this);
+			return;
+			}
+		}
+	DataReceived(this);
+	}
+}
+
+VOID SerialPort::DoTimeout(Handle<Task> task, UINT timeout)
+{
+UINT count=timeout/10;
+for(UINT u=0; u<count; u++)
+	{
+	if(task->Cancel)
+		return;
+	Sleep(10);
+	}
+Abort();
+}
+
+VOID SerialPort::Initialize()
+{
+TimeSpan time;
+time.Duration=-1;
+hDevice->BaudRate=(UINT)BaudRate.GetInternal();
+hDevice->DataBits=8;
+hDevice->Handshake=SerialHandshake::None;
+hDevice->Parity=SerialParity::None;
+hDevice->ReadTimeout=time;
+hDevice->StopBits=SerialStopBitCount::One;
+hDevice->WriteTimeout=time;
+hReader=ref new DataReader(hDevice->InputStream);
+hReader->InputStreamOptions=InputStreamOptions::Partial;
+hWriter=ref new DataWriter(hDevice->OutputStream);
+}
+
+VOID SerialPort::OnBaudRateChanged(Serial::BaudRate baud)
+{
+ScopedLock lock(cCriticalSection);
 if(hDevice)
-	hDevice->BaudRate=ubaud;
+	hDevice->BaudRate=(UINT)baud;
 }
 
 }}

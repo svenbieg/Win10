@@ -11,6 +11,9 @@
 
 #include "ProgressBar.h"
 
+using namespace Graphics;
+using namespace Windows::UI::Xaml::Media;
+
 
 //===========
 // Namespace
@@ -25,12 +28,15 @@ namespace Desktop {
 //==================
 
 ProgressBar::ProgressBar():
+Background(this, Colors::LightGray),
 Progress(this, 0)
 {
 UIProgressBar=ref new Windows::UI::Xaml::Controls::ProgressBar();
 UIProgressBar->Maximum=100;
 UIControl=UIProgressBar;
+Background.Changed.Add(this, &ProgressBar::OnBackgroundChanged);
 Progress.Changed.Add(this, &ProgressBar::OnProgressChanged);
+OnBackgroundChanged(Background.GetInternal());
 }
 
 
@@ -38,9 +44,21 @@ Progress.Changed.Add(this, &ProgressBar::OnProgressChanged);
 // Common Private
 //================
 
-VOID ProgressBar::OnProgressChanged(UINT uprogress)
+VOID ProgressBar::OnBackgroundChanged(COLOR c)
 {
-UIProgressBar->Value=uprogress;
+auto cui=ColorToUIColor(c);
+UIProgressBar->Background=ref new SolidColorBrush(cui);
+}
+
+VOID ProgressBar::OnProgressChanged(INT progress)
+{
+if(progress<0)
+	{
+	UIProgressBar->IsIndeterminate=true;
+	return;
+	}
+UIProgressBar->IsIndeterminate=false;
+UIProgressBar->Value=progress;
 }
 
 }}

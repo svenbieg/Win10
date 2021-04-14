@@ -22,9 +22,9 @@ namespace Desktop {
 	namespace Controls {
 
 
-//============================
-// Con-/Destructors Protected
-//============================
+//==================
+// Con-/Destructors
+//==================
 
 Page::Page():
 Content(this)
@@ -64,12 +64,12 @@ pPage(ppage)
 
 VOID Page::Callback::OnLoaded(Platform::Object^ hsender, RoutedEventArgs^ hargs)
 {
-pPage->Loaded(pPage, pPage);
+pPage->Loaded(pPage);
 }
 
 VOID Page::Callback::OnUnloaded(Platform::Object^ hsender, RoutedEventArgs^ hargs)
 {
-pPage->Unloaded(pPage, pPage);
+pPage->Unloaded(pPage);
 }
 
 }}

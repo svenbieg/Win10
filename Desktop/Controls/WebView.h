@@ -38,7 +38,8 @@ public:
 	// Common
 	VOID Abort();
 	VOID Navigate(Handle<String> Url);
-	Event<WebView, Handle<WebView>, BOOL> NavigationCompleted;
+	Event<WebView> NavigationCompleted;
+	Event<WebView> NavigationFailed;
 	Windows::UI::Xaml::Controls::WebView^ UIWebView;
 
 private:

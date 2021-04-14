@@ -53,18 +53,7 @@ VOID Application::OnLaunched(LaunchActivatedEventArgs^ hargs)
 VOID Application::OnWindowCreated(WindowCreatedEventArgs^ hargs)
 {
 Initialize();
-create_task([this]()
-	{
-	while(1)
-		{
-		CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
-			{
-			auto happ=Desktop::Application::Current;
-			happ->Loop(happ);
-			}));
-		Sleep(10);
-		}
-	});
+DoLoop();
 }
 
 
@@ -74,7 +63,8 @@ create_task([this]()
 
 Application::Application()
 {
-Suspending+=ref new Windows::UI::Xaml::SuspendingEventHandler(this, &Xaml::Application::OnSuspending);
+Suspending+=ref new SuspendingEventHandler(this, &Application::OnSuspending);
+UnhandledException+=ref new UnhandledExceptionEventHandler(this, &Application::OnUnhandledException);
 }
 
 
@@ -82,11 +72,29 @@ Suspending+=ref new Windows::UI::Xaml::SuspendingEventHandler(this, &Xaml::Appli
 // Common Private
 //================
 
-VOID Application::OnSuspending(Platform::Object^ hsender, SuspendingEventArgs^ hargs)
+VOID Application::DoLoop()
+{
+create_task(CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
+	{
+	ScopedLock lock(cCriticalSection);
+	auto happ=Desktop::Application::Current;
+	happ->Loop(happ);
+	}))).then([this]()
+	{
+	DoLoop();
+	});
+}
+
+VOID Application::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
 auto happ=Desktop::Application::Current;
 happ->Destroyed(happ);
 ExitProcess(0);
+}
+
+VOID Application::OnUnhandledException(Platform::Object^ sender, UnhandledExceptionEventArgs^ args)
+{
+args->Handled=true;
 }
 
 }

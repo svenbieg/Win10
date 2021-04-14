@@ -27,12 +27,14 @@ namespace Desktop {
 //==================
 
 Button::Button():
+Enabled(this, true),
 Text(this),
 hCallback(ref new Callback(this))
 {
 UIButton=ref new Windows::UI::Xaml::Controls::Button();
 UIButton->Click+=ref new Windows::UI::Xaml::RoutedEventHandler(hCallback, &Callback::OnClick);
-UIControl=UIButton;
+Initialize(UIButton);
+Enabled.Changed.Add(this, &Button::OnEnabledChanged);
 Text.Changed.Add(this, &Button::OnTextChanged);
 }
 
@@ -40,6 +42,11 @@ Text.Changed.Add(this, &Button::OnTextChanged);
 //================
 // Common Private
 //================
+
+VOID Button::OnEnabledChanged(BOOL enabled)
+{
+UIButton->IsEnabled=enabled;
+}
 
 VOID Button::OnTextChanged(Handle<String> htext)
 {
@@ -63,7 +70,7 @@ UIButton->Content=htextblock;
 
 VOID Button::Callback::OnClick(Platform::Object^ hsender, RoutedEventArgs^ hargs)
 {
-pButton->Clicked(pButton, pButton);
+pButton->Clicked(pButton);
 }
 
 }}

@@ -46,17 +46,24 @@ Background.Changed.Add(this, &Panel::OnBackgroundChanged);
 }
 
 
+//==================
+// Common Protected
+//==================
+
+VOID Panel::Initialize(Windows::UI::Xaml::Controls::Panel^ panel)
+{
+UIPanel=panel;
+UIPanel->Background=ref new SolidColorBrush(Windows::UI::Colors::Transparent);
+}
+
+
 //================
 // Common Private
 //================
 
 VOID Panel::OnBackgroundChanged(COLOR c)
 {
-Windows::UI::Color cui;
-cui.R=c.GetRed();
-cui.G=c.GetGreen();
-cui.B=c.GetBlue();
-cui.A=c.GetAlpha();
+auto cui=ColorToUIColor(c);
 UIPanel->Background=ref new SolidColorBrush(cui);
 }
 

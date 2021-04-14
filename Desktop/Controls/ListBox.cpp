@@ -31,7 +31,7 @@ hCallback(ref new Callback(this))
 {
 UIListBox=ref new Windows::UI::Xaml::Controls::ListBox();
 UIListBox->SelectionChanged+=ref new SelectionChangedEventHandler(hCallback, &Callback::OnSelectionChanged);
-UIControl=UIListBox;
+Initialize(UIListBox);
 }
 
 
@@ -146,7 +146,7 @@ for(auto hit=hitems->First(); hit->HasCurrent(); hit->MoveNext())
 
 VOID ListBox::Callback::OnSelectionChanged(Platform::Object^ hsender, SelectionChangedEventArgs^ hargs)
 {
-pListBox->SelectionChanged(pListBox, pListBox, pListBox->GetSelected());
+pListBox->SelectionChanged(pListBox, pListBox->GetSelected());
 }
 
 }}

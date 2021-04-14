@@ -9,6 +9,7 @@
 // Using
 //=======
 
+#include "Graphics/Color.h"
 #include "Control.h"
 
 
@@ -31,12 +32,14 @@ public:
 	ProgressBar();
 
 	// Common
-	Property<ProgressBar, UINT> Progress;
+	Property<ProgressBar, Graphics::COLOR> Background;
+	Property<ProgressBar, INT> Progress;
 	Windows::UI::Xaml::Controls::ProgressBar^ UIProgressBar;
 
 private:
 	// Common
-	VOID OnProgressChanged(UINT Progress);
+	VOID OnBackgroundChanged(Graphics::COLOR Color);
+	VOID OnProgressChanged(INT Progress);
 };
 
 }}

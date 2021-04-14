@@ -45,7 +45,7 @@ public:
 	VOID Remove(Handle<String> Text);
 	VOID RemoveAt(UINT Position);
 	VOID Select(INT Position);
-	Event<ListBox, Handle<ListBox>, INT> SelectionChanged;
+	Event<ListBox, INT> SelectionChanged;
 	VOID Set(Handle<StringList> Items);
 	Windows::UI::Xaml::Controls::ListBox^ UIListBox;
 

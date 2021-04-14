@@ -10,6 +10,7 @@
 //=======
 
 #include "Storage/Streams/RandomAccessStream.h"
+#include "Devices/Serial/BaudRate.h"
 
 
 //===========
@@ -34,8 +35,23 @@ private:
 
 public:
 	// Con-/Destructors
-	SerialPort(Platform::String^ Id);
+	SerialPort(Serial::BaudRate BaudRate=Serial::BaudRate::Baud115200);
 	~SerialPort();
+
+	// Common
+	VOID Abort();
+	Property<SerialPort, Serial::BaudRate> BaudRate;
+	VOID Cancel();
+	VOID ClearBuffer();
+	VOID Close();
+	VOID Connect(Platform::String^ Id);
+	Event<SerialPort> Connected;
+	Event<SerialPort> DataReceived;
+	Event<SerialPort> Disconnected;
+	VOID Listen(UINT Size=4096);
+	UINT Load(UINT Size, UINT Timeout=0);
+	VOID SetDataTerminalReady(BOOL Enabled);
+	VOID SetRequestToSend(BOOL Enabled);
 
 	// Input-Stream
 	SIZE_T Available()override;
@@ -45,18 +61,19 @@ public:
 	VOID Flush()override;
 	SIZE_T Write(VOID const* Buffer, SIZE_T Size)override;
 
-	// Common
-	Property<SerialPort, UINT> BaudRate;
-	VOID Close();
-	Event<SerialPort> Disconnected;
-	SIZE_T Receive(SIZE_T Size);
-	SIZE_T Receive(SIZE_T Size, UINT MilliSeconds);
-
 private:
 	// Common
-	VOID OnBaudRateChanged(UINT BaudRate);
+	VOID CloseInternal();
+	VOID DoListen(Handle<Task> Task, UINT Size);
+	VOID DoTimeout(Handle<Task> Task, UINT Timeout);
+	VOID Initialize();
+	VOID OnBaudRateChanged(Serial::BaudRate BaudRate);
+	CriticalSection cCriticalSection;
 	SerialDevice^ hDevice;
+	Platform::String^ hDeviceId;
 	DataReader^ hReader;
+	Handle<Task> hListenTask;
+	Handle<Task> hTimeoutTask;
 	DataWriter^ hWriter;
 };
 

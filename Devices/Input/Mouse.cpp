@@ -11,6 +11,7 @@
 
 #include "Mouse.h"
 
+using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 

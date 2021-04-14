@@ -29,7 +29,7 @@ namespace Desktop {
 ScrollBox::ScrollBox()
 {
 UIScrollBox=ref new ScrollViewer();
-UIControl=UIScrollBox;
+Initialize(UIScrollBox);
 }
 
 }}

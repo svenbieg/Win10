@@ -11,7 +11,10 @@
 
 #include "TextBlock.h"
 
+using namespace Graphics;
+using namespace Windows::UI::Text;
 using namespace Windows::UI::Xaml::Media;
+
 
 //===========
 // Namespace
@@ -26,15 +29,19 @@ namespace Desktop {
 //==================
 
 TextBlock::TextBlock():
+Color(this, Colors::Black),
 Font(this),
 FontSize(this, 15),
+FontWeight(this, 300),
 Text(this)
 {
 UITextBlock=ref new Windows::UI::Xaml::Controls::TextBlock();
 UITextBlock->FontSize=15;
 UIControl=UITextBlock;
+Color.Changed.Add(this, &TextBlock::OnColorChanged);
 Font.Changed.Add(this, &TextBlock::OnFontChanged);
 FontSize.Changed.Add(this, &TextBlock::OnFontSizeChanged);
+FontWeight.Changed.Add(this, &TextBlock::OnFontWeightChanged);
 Text.Changed.Add(this, &TextBlock::OnTextChanged);
 }
 
@@ -42,6 +49,12 @@ Text.Changed.Add(this, &TextBlock::OnTextChanged);
 //================
 // Common Private
 //================
+
+VOID TextBlock::OnColorChanged(COLOR c)
+{
+auto cui=ColorToUIColor(c);
+UITextBlock->Foreground=ref new SolidColorBrush(cui);
+}
 
 VOID TextBlock::OnFontChanged(Handle<String> hfont)
 {
@@ -56,6 +69,13 @@ UITextBlock->FontFamily=ref new FontFamily(Platform::StringReference(hfont->Begi
 VOID TextBlock::OnFontSizeChanged(UINT usize)
 {
 UITextBlock->FontSize=usize;
+}
+
+VOID TextBlock::OnFontWeightChanged(UINT weight)
+{
+auto w=FontWeights::Normal;
+w.Weight=weight;
+UITextBlock->FontWeight=w;
 }
 
 VOID TextBlock::OnTextChanged(Handle<String> htext)

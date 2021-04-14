@@ -9,6 +9,7 @@
 // Using
 //=======
 
+#include "Devices/Input/VirtualKey.h"
 #include "Graphics/Rect.h"
 
 
@@ -59,10 +60,15 @@ Stretch
 
 class Control: public Object
 {
+private:
+	// Using
+	using VirtualKey=Devices::Input::VirtualKey;
+
 public:
 	// Common
 	Property<Control, HorizontalAlignment> Align;
 	Property<Control, VerticalAlignment> AlignVertical;
+	Event<Control, VirtualKey> KeyDown;
 	Property<Control, UINT> MaxHeight;
 	Property<Control, UINT> MaxWidth;
 	Property<Control, UINT> MinHeight;
@@ -75,6 +81,9 @@ protected:
 	// Con-/Destructors
 	Control();
 
+	// Common
+	VOID Initialize(Windows::UI::Xaml::FrameworkElement^ Control);
+
 private:
 	// Common
 	VOID OnAlignChanged(HorizontalAlignment Align);
@@ -84,6 +93,19 @@ private:
 	VOID OnMinHeightChanged(UINT MaxHeight);
 	VOID OnMinWidthChanged(UINT MaxWidth);
 	VOID OnVisibleChanged(BOOL Visible);
+
+	// Callback
+	ref class Callback sealed
+		{
+		internal:
+			// Con-/Destructors
+			Callback(Control* Control): pControl(Control) {}
+
+			// Common
+			VOID OnKeyDown(Platform::Object^ Sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ Args);
+			Control* pControl;
+		};
+	Callback^ hCallback;
 };
 
 }}

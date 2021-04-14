@@ -30,8 +30,8 @@ namespace Desktop {
 Grid::Grid()
 {
 UIGrid=ref new Windows::UI::Xaml::Controls::Grid();
-UIPanel=UIGrid;
-UIControl=UIGrid;
+Panel::Initialize(UIGrid);
+Control::Initialize(UIGrid);
 hChildren=new ControlList();
 }
 
@@ -80,6 +80,24 @@ if(height==GridLength::Star)
 	unit=GridUnitType::Star;
 hdef->Height=Windows::UI::Xaml::GridLength(1, unit);
 UIGrid->RowDefinitions->Append(hdef);
+}
+
+VOID Grid::Remove(Handle<Control> hctrl)
+{
+if(!hctrl)
+	return;
+auto children=UIGrid->Children;
+UINT pos=0;
+for(auto hit=children->First(); hit->HasCurrent; hit->MoveNext())
+	{
+	if(hit->Current==hctrl->UIControl)
+		{
+		UINT id=0;
+		if(children->IndexOf(hit->Current, &id))
+			children->RemoveAt(id);
+		return;
+		}
+	}
 }
 
 }}

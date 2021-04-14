@@ -11,6 +11,8 @@
 
 #include "WebView.h"
 
+using namespace Concurrency;
+using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml::Controls;
 
 
@@ -31,7 +33,7 @@ hCallback(ref new Callback(this))
 {
 UIWebView=ref new Windows::UI::Xaml::Controls::WebView();
 UIWebView->NavigationCompleted+=ref new TypedEventHandler<Windows::UI::Xaml::Controls::WebView^, WebViewNavigationCompletedEventArgs^>(hCallback, &Callback::OnNavigationCompleted);
-UIControl=UIWebView;
+Initialize(UIWebView);
 }
 
 
@@ -61,7 +63,14 @@ pWebView(pwebview)
 
 VOID WebView::Callback::OnNavigationCompleted(Windows::UI::Xaml::Controls::WebView^ hsender, WebViewNavigationCompletedEventArgs^ hargs)
 {
-pWebView->NavigationCompleted(pWebView, pWebView, hargs->IsSuccess);
+if(hargs->IsSuccess)
+	{
+	pWebView->NavigationCompleted(pWebView);
+	}
+else
+	{
+	pWebView->NavigationFailed(pWebView);
+	}
 }
 
 }}

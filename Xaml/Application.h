@@ -22,6 +22,7 @@ private:
 	// Using
 	using LaunchActivatedEventArgs=Windows::ApplicationModel::Activation::LaunchActivatedEventArgs;
 	using SuspendingEventArgs=Windows::ApplicationModel::SuspendingEventArgs;
+	using UnhandledExceptionEventArgs=Windows::UI::Xaml::UnhandledExceptionEventArgs;
 	using WindowCreatedEventArgs=Windows::UI::Xaml::WindowCreatedEventArgs;
 
 public:
@@ -35,7 +36,10 @@ internal:
 
 private:
 	// Common
+	VOID DoLoop();
 	VOID OnSuspending(Platform::Object^ Sender, SuspendingEventArgs^ Args);
+	VOID OnUnhandledException(Platform::Object^ Sender, UnhandledExceptionEventArgs^ Args);
+	CriticalSection cCriticalSection;
 };
 
 }

@@ -37,6 +37,9 @@ protected:
 	// Con-/Destructors
 	Panel();
 
+	// Common
+	VOID Initialize(Windows::UI::Xaml::Controls::Panel^ Panel);
+
 private:
 	// Common
 	VOID OnBackgroundChanged(Graphics::COLOR Color);

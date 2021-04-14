@@ -31,12 +31,14 @@ public:
 	Button();
 
 	// Common
-	Event<Button, Handle<Button>> Clicked;
+	Event<Button> Clicked;
+	Property<Button, BOOL> Enabled;
 	VariableHandle<Button, String> Text;
 	Windows::UI::Xaml::Controls::Button^ UIButton;
 
 private:
 	// Common
+	VOID OnEnabledChanged(BOOL Enabled);
 	VOID OnTextChanged(Handle<String> Text);
 
 	// Callback

@@ -52,6 +52,7 @@ public:
 	VOID AddColumn(GridLength Width);
 	VOID AddRow(UINT Height);
 	VOID AddRow(GridLength Height);
+	VOID Remove(Handle<Control> Control);
 	Windows::UI::Xaml::Controls::Grid^ UIGrid;
 
 private:

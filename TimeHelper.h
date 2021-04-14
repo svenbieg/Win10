@@ -5,8 +5,15 @@
 #pragma once
 
 
+//=======
+// Using
+//=======
+
+using TimeSpan=Windows::Foundation::TimeSpan;
+
+
 //========
 // Common
 //========
 
-using TimeSpan=Windows::Foundation::TimeSpan;
+VOID Sleep(UINT Milliseconds, volatile BOOL* Cancel);

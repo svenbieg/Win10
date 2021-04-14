@@ -14,18 +14,13 @@
 #include "Win/Platform.h"
 
 
-//=========
-// Default
-//=========
-
-#include "EventHelper.h"
-#include "ResourceHelper.h"
-#include "TaskHelper.h"
-#include "TimeHelper.h"
-
-
 //========
 // Common
 //========
 
 #include "Desktop/Application.h"
+#include "Graphics/ColorHelper.h"
+#include "EventHelper.h"
+#include "ResourceHelper.h"
+#include "TaskHelper.h"
+#include "TimeHelper.h"

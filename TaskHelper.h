@@ -11,21 +11,23 @@
 
 #include <concrt.h>
 #include <ppltasks.h>
+#include "TaskClass.h"
 
 
 //========
 // Common
 //========
 
-using AsyncAction=Windows::Foundation::IAsyncAction;
-template <class TResult> using AsyncOperation=Windows::Foundation::IAsyncOperation<TResult>;
-
-template <class _ReturnType> inline Concurrency::task<_ReturnType> CreateTask(Concurrency::task<_ReturnType> const& Task)
+template <class _owner_t, class... _args_t> Handle<Task> CreateTask(_owner_t* Owner, VOID (_owner_t::*Procedure)(_args_t...), _args_t... Arguments)
 {
-return Concurrency::create_task(Task);
+auto task=new TaskTyped<_owner_t, _args_t...>(Owner, Procedure);
+task->Run(Arguments...);
+return task;
 }
 
-template <class _Ty> inline Concurrency::task<typename Concurrency::details::_TaskTypeFromParam<_Ty>::_Type> CreateTask(_Ty Task, Concurrency::task_options Options=Concurrency::task_options())
+template <class _owner_t, class... _args_t> Handle<Task> CreateTask(_owner_t* Owner, VOID (_owner_t::*Procedure)(Handle<Task>, _args_t...), _args_t... Arguments)
 {
-return Concurrency::create_task(Task, Options);
+auto task=new TaskTyped<_owner_t, Handle<Task>, _args_t...>(Owner, Procedure);
+task->Run(Arguments...);
+return task;
 }

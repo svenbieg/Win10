@@ -31,15 +31,14 @@ private:
 	using RoutedEventArgs=Windows::UI::Xaml::RoutedEventArgs;
 
 public:
-	// Common
-	VariableHandle<Page, Control> Content;
-	Event<Page, Handle<Page>> Loaded;
-	Windows::UI::Xaml::Controls::Page^ UIPage;
-	Event<Page, Handle<Page>> Unloaded;
-
-protected:
 	// Con-/Destructors
 	Page();
+
+	// Common
+	VariableHandle<Page, Control> Content;
+	Event<Page> Loaded;
+	Windows::UI::Xaml::Controls::Page^ UIPage;
+	Event<Page> Unloaded;
 
 private:
 	// Common

@@ -12,6 +12,7 @@
 #include "Panel.h"
 
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Input;
 
 
 //===========
@@ -28,12 +29,13 @@ namespace Desktop {
 
 Control::Control():
 Align(this, HorizontalAlignment::Left),
-AlignVertical(this, VerticalAlignment::Top),
+AlignVertical(this, VerticalAlignment::Middle),
 MaxHeight(this, -1),
 MaxWidth(this, -1),
 MinHeight(this, 0),
 MinWidth(this, 0),
-Visible(this, true)
+Visible(this, true),
+hCallback(ref new Callback(this))
 {
 Align.Changed.Add(this, &Control::OnAlignChanged);
 AlignVertical.Changed.Add(this, &Control::OnAlignVerticalChanged);
@@ -42,6 +44,17 @@ MaxWidth.Changed.Add(this, &Control::OnMaxWidthChanged);
 MinHeight.Changed.Add(this, &Control::OnMinHeightChanged);
 MinWidth.Changed.Add(this, &Control::OnMinWidthChanged);
 Visible.Changed.Add(this, &Control::OnVisibleChanged);
+}
+
+
+//==================
+// Common Protected
+//==================
+
+VOID Control::Initialize(FrameworkElement^ control)
+{
+UIControl=control;
+UIControl->KeyDown+=ref new KeyEventHandler(hCallback, &Callback::OnKeyDown);
 }
 
 
@@ -131,6 +144,16 @@ VOID Control::OnVisibleChanged(BOOL bvisible)
 {
 if(UIControl)
 	UIControl->Visibility=bvisible? Visibility::Visible: Visibility::Collapsed;
+}
+
+
+//==================
+// Callback Private
+//==================
+
+VOID Control::Callback::OnKeyDown(Platform::Object^ sender, KeyRoutedEventArgs^ args)
+{
+pControl->KeyDown(pControl, (VirtualKey)args->Key);
 }
 
 }}

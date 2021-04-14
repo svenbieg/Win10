@@ -78,6 +78,23 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Framework\Application.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\EditBox.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Controls\PasswordBox.cpp">
+      <Filter>Desktop\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Desktop\Dialogs\Dialog.cpp">
+      <Filter>Desktop\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ColorHelper.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Symbols.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TaskClass.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TimeHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
@@ -123,9 +140,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\WebView.h">
       <Filter>Desktop\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\Menus\Symbols.h">
-      <Filter>Desktop\Controls\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Serial\SerialPort.h">
       <Filter>Devices\Serial</Filter>
     </ClInclude>
@@ -165,6 +179,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Framework\Application.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\EditBox.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TaskClass.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Controls\PasswordBox.h">
+      <Filter>Desktop\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Desktop\Dialogs\Dialog.h">
+      <Filter>Desktop\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ColorHelper.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Symbols.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Devices">
@@ -194,12 +224,15 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{ce3f81c2-5f2a-4637-bfe9-5f71e37c71a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desktop\Dialogs">
+      <UniqueIdentifier>{76dd394c-983c-460a-ab08-081ab19c8153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{126e0dc7-4682-413b-902b-d423221c9435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Configuration\Configuration.props">
-      <Filter>Configuration</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Configuration\Default.props">
       <Filter>Configuration</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Configuration\Platform.props">
