@@ -9,6 +9,7 @@
 // Using
 //=======
 
+#include <functional>
 #include "Desktop/Controls/Control.h"
 
 
@@ -38,7 +39,7 @@ public:
 	VariableHandle<Dialog, String> PrimaryText;
 	Event<Dialog> Secondary;
 	VariableHandle<Dialog, String> SecondaryText;
-	VOID Show(Procedure Primary=[](){}, Procedure Secondary=[](){});
+	VOID Show(std::function<VOID()> Primary=[](){}, std::function<VOID()> Secondary=[](){});
 	VariableHandle<Dialog, String> Title;
 	Windows::UI::Xaml::Controls::ContentDialog^ UIContentDialog;
 

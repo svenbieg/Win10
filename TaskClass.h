@@ -11,7 +11,6 @@
 
 #include <concrt.h>
 #include <ppltasks.h>
-#include "Procedure.h"
 
 
 //======

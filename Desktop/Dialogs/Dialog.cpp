@@ -36,7 +36,7 @@ bResult=result;
 UIContentDialog->Hide();
 }
 
-VOID Dialog::Show(Procedure primary, Procedure secondary)
+VOID Dialog::Show(std::function<VOID()> primary, std::function<VOID()> secondary)
 {
 bResult=false;
 create_task(UIContentDialog->ShowAsync()).then([this, primary, secondary](ContentDialogResult result)

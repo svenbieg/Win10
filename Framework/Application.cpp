@@ -88,8 +88,6 @@ VOID FrameworkView::Uninitialize()
 
 VOID FrameworkView::OnSuspending(Platform::Object^ hsender, SuspendingEventArgs^ hargs)
 {
-auto happ=Desktop::Application::Current;
-happ->Destroyed(happ);
 ExitProcess(0);
 }
 

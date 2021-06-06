@@ -87,8 +87,6 @@ create_task(CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(CoreDisp
 
 VOID Application::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
-auto happ=Desktop::Application::Current;
-happ->Destroyed(happ);
 ExitProcess(0);
 }
 
